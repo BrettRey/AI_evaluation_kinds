@@ -59,8 +59,8 @@ Already treated through taxonomies of attacks and defences, including black-box/
 Best treated together. Shared problem: not "what is the cluster for each term?" but "when does benchmark performance justify a kind-attribution?"
 
 - *Emergence*: Schaeffer, Miranda & Koyejo 2023 (arXiv:2304.15004) "Are Emergent Abilities of Large Language Models a Mirage?" — alleged emergent abilities may be artefacts of metric choice, not discontinuous changes.
-- *Agency*: heavily tied to LLM-agent work; agentic systems characterised in terms of reasoning, acting, and interacting. Anchor: Liu et al. 2025 (arXiv:2503.23037).
-- *Reasoning*: embedded in benchmark design, prompting, tool use, training regimes, and interpretive disputes about whether behaviour reflects reasoning or merely performance on reasoning-shaped tasks.
+- *Agency*: heavily tied to LLM-agent work; agentic systems characterised in terms of reasoning, acting, and interacting. Anchor: Plaat et al. 2025 (JAIR 84, article 29; DOI 10.1613/jair.1.18675; arXiv:2503.23037). Earlier notes had this as "Liu et al. 2025"; that was a source-identification error.
+- *Reasoning*: embedded in benchmark design, prompting, tool use, training regimes, and interpretive disputes about whether behaviour reflects reasoning or merely performance on reasoning-shaped tasks. Huang and Chang 2023 give the survey frame; Mirzadeh et al. 2025 give a controlled mathematical-reasoning benchmark challenge.
 
 Joint move: capability terms in AI are field-relative projectibility claims, not simple psychological attributions. Benchmark essentialism (passing a task cleanly reveals a capability-kind) is the target.
 
@@ -70,6 +70,7 @@ The alignment literature itself notes that there is no universally accepted defi
 
 - Treatment: not first-order HPC kinds. More like *health* or *fitness*: high-level evaluative constructs whose components are themselves better candidates for HPC/network treatment.
 - Argument: *alignment* and *trustworthiness* are second-order regulatory constructs that coordinate lower-level projectible kinds (robustness failure, deception, hallucination, privacy leakage, unsafe compliance, discriminatory performance, adversarial vulnerability).
+- Pressure case: sycophancy. Shapira et al. 2026 and Sharma et al. 2024 show why a behavior can be an apparent success relative to a preference-learning target while failing truthfulness or user welfare. This stays here; it is not a fourth worked case under the current scope decision.
 
 ### Bias (deployment-sensitive)
 
@@ -114,10 +115,23 @@ Decision deferred until draft is structured.
 - Huang et al. 2023 — hallucination survey.
 - Yi et al. 2024 — jailbreak attacks and defences survey.
 - Schaeffer et al. 2023 — "emergent abilities are a mirage."
-- Liu et al. 2025 — agentic LLMs survey.
+- Plaat et al. 2025 — agentic LLMs survey.
+- Huang and Chang 2023 — reasoning in LLMs survey.
+- Mirzadeh et al. 2025 — GSM-Symbolic and mathematical-reasoning benchmark fragility.
 - Mehrabi et al. 2021 — bias/fairness in ML survey.
 - alignmentsurvey.com 2023 — comprehensive alignment survey.
 - NIST AI RMF 1.0 (2023) — trustworthy AI umbrella.
 - Khalidi 2018 (*Synthese*) — nodes in causal networks.
 - Khalidi 2013 — *Natural Categories and Human Kinds*.
 - Boyd 1991 — homeostatic property clusters.
+
+## 9. Weinberger 2026: stability vs control
+
+Weinberger's "Homeostasis and causal control" should be part of the rewrite, not a side citation. The AI-evaluation version of the distinction is:
+
+- benchmark reliability = stable score behaviour under specified conditions;
+- construct validity = what the score means in the measured setting;
+- projectibility = when the claim may travel across models, prompts, attacks, benchmarks, or governance uses;
+- control/homeostasis = a stricter question about whether an evaluation regime corrects perturbations through monitoring, red-teaming, release gates, retraining, incident response, and policy enforcement.
+
+This helps prevent the draft from saying that a benchmarked behaviour is "stable" and then treating that as a kind-making mechanism. A model family, benchmark suite, or governance term becomes control-like only when there is feedback-sensitive maintenance, not just repeated measurement.

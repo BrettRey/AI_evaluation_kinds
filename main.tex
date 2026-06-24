@@ -2,51 +2,689 @@
 
 % House style preamble
 \input{.house-style/preamble.tex}
+\usepackage{float}
+\usepackage[section]{placeins}
 
 % Update PDF metadata
 \hypersetup{
-  pdftitle={AI evaluation kinds}
+  pdftitle={From Scores to Kinds: Projectibility and Validity in AI Evaluation}
 }
 
-\title{AI evaluation kinds}
+\title{From Scores to Kinds: Projectibility and Validity in AI Evaluation}
 \author{Brett Reynolds \orcidlink{0000-0003-0073-7195}%
 \thanks{Contact: \href{mailto:brett.reynolds@humber.ca}{brett.reynolds@humber.ca}}\\
 Humber Polytechnic \& University of Toronto}
 \date{\today}
 
+\fancyhf{}
+\fancyhead[L]{\small\scshape From Scores to Kinds}
+\fancyhead[R]{\small\thepage}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{14pt}
+\setlength{\emergencystretch}{2em}
+
 \begin{document}
 \maketitle
 
 \begin{abstract}
-TODO: Write abstract here.
+AI evaluation terms often let scores and labels travel beyond the cases that
+produced them. A benchmark result becomes evidence for \term{reasoning}; an
+attack result becomes evidence of \term{jailbreak resistance}; an aggregate
+label becomes a governance claim about \term{alignment} or
+\term{trustworthiness}. This paper argues that such terms function as inference
+licences. They authorize movement from observations, outputs, interactions, or
+scores to claims about recurrence, vulnerability, capability, or governance.
+
+Combining construct validity with Boyd's and Khalidi's accounts of projectible
+kinds, I ask what each term licenses and what would let that licence travel
+across models, benchmarks, attacks, and deployments. I develop a diagnostic
+typology: output-centred failure profiles, adversarial relations, capability
+attributions, and umbrella governance constructs. The typology clarifies why
+disputes about \term{hallucination}, \term{jailbreak}, \term{reasoning},
+\term{emergence}, \term{agency}, \term{alignment}, and
+\term{trustworthiness} often go wrong: one inferential profile is read as
+another. The payoff is a way to design and report AI evaluations around the
+inferences they can support.
 \end{abstract}
 
 \section{Introduction}
 
-TODO: Write introduction here.
+AI evaluation often moves from a score to a much larger claim. A benchmark result
+is reported as evidence for \term{reasoning}. A safety evaluation says that a
+system has \term{jailbreak resistance}. A model card, audit, or policy document
+describes an assistant in terms of \term{alignment}, \term{trustworthiness}, or
+\term{hallucination} risk. These labels point to observed behaviour and invite
+readers to draw inferences: that a failure will recur, that a defence will
+generalize, that a capability will transfer, or that a system is suitable for
+some governance purpose.
 
-\section{Background}
+The debate over emergent abilities in large language models shows the problem in
+a compact form. \textcite{wei2022emergent} argue that some abilities appear only
+once models reach sufficient scale. \textcite{schaeffer2023emergent} reply that
+some apparent jumps can be produced by the choice of metric: discontinuous
+scoring can make gradual changes in performance look like sudden emergence.
 
-TODO: Add background section.
+The dispute reaches beyond the acquisition of new abilities. It asks what a score
+licenses us to infer. If a benchmark curve has a sharp bend, can we
+infer a new capability, a change in the measurement instrument, or something
+more local about a task, metric, and model family?
 
-\section{Analysis}
+That example is one instance of a broader pattern. \textcite{raji2021whole}
+argue that influential benchmarks are often treated as stand-ins for broad
+claims about general ability, even though the benchmarks themselves are finite,
+contextual, and constructed around specific tasks. A benchmark can be useful
+while still being too narrow to support the claim attached to it. AI evaluation
+terms are vague in places, but the deeper issue is inferential. They function as
+\term{inference licences}: they authorize a move from an observation or score to
+a claim about recurrence, vulnerability, capability, or governance. Different
+terms authorize different moves.
 
-TODO: Add analysis section.
+This paper asks which inference each AI evaluation term licenses, and what would
+make that inference projectible. I use \term{projectibility} in a plain sense
+first: a classification is projectible when applying it in one case gives us a
+warranted reason to expect something in another.
 
-\section{Discussion}
+If a system produces one
+unsupported answer, that alone doesn't show a general tendency to hallucinate.
+If an attack succeeds once, that alone doesn't show that the model is generally
+unsafe. If a model passes one reasoning benchmark, that alone doesn't show a
+stable reasoning capability. The classification becomes useful when we can say
+what else should follow from it, in which domain, and under which limits.
 
-TODO: Add discussion.
+The philosophical background sharpens this point. In a classical definition, a
+term gives necessary and sufficient conditions for membership. Boyd's account
+of \term{homeostatic property clusters} and Khalidi's causal-network account
+show how classes can support projection without that form of definition
+\citep{boyd1991,boyd1999,khalidi2018causal}. For AI evaluation, the lesson is
+modest: useful terms needn't have essences, but they should mark structures that
+support defensible inferences beyond the immediate observation.
+
+The \term{construct validity} tradition gives the measurement side of the same
+problem. A test score doesn't interpret itself. It needs a construct, an
+operationalization, a metric, a population of instances, and an intended use.
+Kane's argument-based view of validation is useful here because it treats
+validity as a question about the interpretations and uses licensed by scores
+\citep{kane2013validating}. AI evaluations should be read the same way. A label
+such as \term{hallucination} or \term{jailbreak} belongs to a measurement
+practice that includes tasks, prompts, raters or automated judges, policies,
+metrics, populations, and deployment decisions.
+
+The division of labour is the paper's hinge. Construct validity asks what a
+score or label licenses in the measured setting. Projectibility asks when that
+licensed inference can travel to another model, benchmark, attack, or
+deployment. The first question concerns the local interpretation of a result.
+The second concerns the conditions under which that interpretation can support a
+further expectation elsewhere.
+
+The paper develops a four-way typology of AI evaluation terms by their primary
+inferential role: output-centred failure profiles, adversarial relation kinds,
+capability-attribution terms, and umbrella governance constructs. The typology
+is deliberately non-exclusive. It classifies a term by the inference its
+evaluations are mainly used to license, not by a metaphysical essence or by all
+of the term's secondary associations.
+
+The argument proceeds as follows. Section~2 presents evaluation terms as
+inference licences and connects them to construct validity. Section~3 introduces
+projectibility without essences, using Boyd and Khalidi to explain why some
+classes can support inference without classical definitions. Section~4 states
+the typology. Sections~5--7 work through hallucination, jailbreak resistance,
+and capability attribution. Section~8 uses sycophancy as a pressure case for
+alignment and trustworthiness as umbrella constructs. Section~9 returns to the
+central diagnostic: an AI evaluation term is useful when we know what it
+licenses, what makes that licence travel, and where it stops.
+
+\section{Evaluation terms as inference licences}
+
+Evaluation language climbs an inference ladder. A raw output, interaction, or
+score becomes an evaluation label. The label receives a construct
+interpretation. The construct supports a kind attribution. The attribution then
+enters a model comparison, release decision, procurement standard, or governance
+claim. Each step can be legitimate, but the warrant changes as the claim climbs.
+
+\begin{figure}[H]
+\centering
+\small
+\begin{tabular}{@{}c@{}}
+raw output, interaction, or score \\
+\(\downarrow\) \\
+evaluation label \\
+\(\downarrow\) \\
+construct interpretation \\
+\(\downarrow\) \\
+kind attribution \\
+\(\downarrow\) \\
+comparison, release, procurement, or governance claim
+\end{tabular}
+\caption{The inference ladder in AI evaluation.}
+\label{fig:inference-ladder}
+\end{figure}
+
+Consider a mathematical-reasoning benchmark. Raw completions are first coded as
+right or wrong on individual items. The metric aggregates those judgements into
+an accuracy score. The benchmark report then interprets the score as evidence
+for a construct such as \term{mathematical reasoning}. A leaderboard turns that
+interpretation into a model ranking, and a user can then treat the ranking as
+evidence for deployment suitability. The same number appears throughout, but the
+claim has changed at every rung.
+
+The narrow inference can be sound while the wider one fails. A high score on one
+population of word problems can license a claim about performance on those
+items, under that prompt format and scoring rule. It doesn't yet license a
+general reasoning claim across paraphrases, irrelevant clauses, new item
+generators, languages, tool scaffolds, or contamination controls. The ladder
+therefore makes the analytic question visible: which movement is being licensed,
+and what evidence supports it?
+
+Construct validity names the first warrant. A score has meaning only relative to
+a construct, an operationalization, a metric, a population of instances, and an
+intended use \citep{kane2013validating,chouldechova2024shared}. An
+operationalization is the concrete test procedure that makes a construct
+measurable. Here, validity is local: the relevant warrant connects a score to a
+stated interpretation and use. Work on LLM benchmarks makes the same point in
+the evaluation setting: a benchmark operationalizes a phenomenon through tasks
+and metrics, then supports a claim only if those parts line up
+\citep{bean2025measuring,freiesleben2026establishing}.
+
+In LLM evaluation, repeated probing often makes \term{reliability} easier to
+estimate: evaluators can ask whether results are stable across item samples,
+prompt variants, decoding settings, and evaluator systems. Reliability sharpens
+the local warrant, but it doesn't settle interpretation. The validity question is
+which probes are compressed into which score, for which construct interpretation
+and use.
+
+Model comparison makes that compression consequential. Ranking model A above
+model B requires more than running the same benchmark twice. It requires a
+judgement that the chosen score summarizes the right profile of tasks, prompts,
+languages, evaluator systems, and deployment conditions for the intended
+comparison. A leaderboard can be valid as a narrow benchmark comparison and fail
+as a governance conclusion if those supports don't hold \citep{raji2021whole}.
+
+The comparison point also marks the limit of construct validity. Validity can
+say what the score licenses here, but it doesn't settle whether the claim
+travels to another model family, attack distribution, user population, or
+deployment. That's the projectibility question.
+
+\section{Projectibility without essences}
+
+The projectibility question turns on structure rather than classical
+definitions. A classical definition gives necessary and sufficient conditions
+for class membership. The accounts I draw on reject that requirement. Boyd's
+account of \term{homeostatic property clusters} explains how a class can
+support projection when its properties cluster through stabilizing mechanisms.
+Khalidi's causal-network account explains projectibility through relations among
+properties, where some properties are more central and help explain the presence
+or stability of others \citep{boyd1991,boyd1999,khalidi2018causal}.
+
+For this paper, the shared lesson is that an evaluation term can be useful
+without a crisp definition if it marks structure that supports reliable
+inference.
+
+Here, \term{class} and \term{kind} do different jobs. A class is any grouping
+introduced by an evaluation practice. A kind, in the stronger sense used here,
+is a class whose structure supports projection. The paper therefore doesn't ask
+whether every label is a kind. It asks when an evaluation class earns that
+stronger status.
+
+A classification is projectible when applying it in one setting gives a
+warranted reason to expect something in another setting, under stated
+conditions. The conditions matter. Projection is field-relative: what travels
+depends on the domain, purpose, population, and use of the evaluation. A label
+can project across nearby prompt variants while failing to project across
+languages, tool access, deployment settings, or adversary classes.
+
+Suppose a red-team test finds that an adversarial suffix (a string appended to a
+prompt) makes a chat assistant answer a prohibited request. The result supports
+a narrow projection. If the suffix still works after a few tokens are swapped,
+after a harmless phrase is added before it, or when another optimizer seed
+produces a similar appended string, the test gives reason to expect similar
+vulnerability under the same chat interface, refusal policy, and evaluator
+standard.
+
+The same result says little about an indirect prompt-injection case where a
+browser agent reads a web page that tells it to send a private file. The
+attacker, channel, policy boundary, and system boundary have changed, so the
+original classification no longer carries the same expectation.
+
+In AI evaluation, projectibility-relevant structure is artificial, engineered,
+and institutional. It can include training data, model architecture, training
+objectives, post-training incentives, decoding procedures, retrieval design,
+prompt format, interface constraints, policy boundaries, evaluator models,
+benchmark construction, reporting conventions, and deployment use. None of these
+is necessary or sufficient; none is essential. Together, though, they can explain
+why a failure profile, vulnerability, capability attribution, or governance
+bundle recurs, and why projection weakens when those supports change.
+
+A structure matters for projectibility when it does two jobs: it explains why an
+inference travels and where it stops. A resampling detector gives the simple
+case. The detector treats variation across sampled answers as evidence that a
+claim is unsupported. The signal can travel to settings where unsupported claims
+vary across samples. It travels poorly to a model that repeats the same
+unsupported answer every time, because the signal has disappeared.
+
+The same test applies to jailbreaks and reasoning scores. A jailbreak attack
+transfers when systems share the interface and refusal machinery that the attack
+exploits; change the interface, policy filter, or model family, and the basis
+for transfer changes. A reasoning score travels when item variants test the same
+capacity; if irrelevant clauses or a different metric reverse the result, the
+score tracked the test setup more than the capability.
+
+The typology below applies that test to four recurring roles in AI evaluation
+language. For each role, the question is what inference the term licenses, what
+structure lets that inference travel, and what change breaks the projection.
+
+\section{A typology of AI evaluation terms}
+
+The typology classifies AI evaluation terms by their primary inferential role.
+The relevant question is practical and semantic at once: when evaluators use the
+term, what are they trying to infer from the observation, score, or label?
+Table~\ref{tab:typology} gives the diagnostic form. Each row has the same
+shape: observation, operationalization, licensed inference, projectibility
+payoff, characteristic invalid inference, and use context.
+Read each row from left to right: an observation becomes an operationalization,
+the operationalization licenses an inference, and the final columns state what
+can travel and what overgeneralization should be blocked.
+
+\begin{table}[H]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{>{\raggedright\arraybackslash}p{0.11\textwidth}
+                >{\raggedright\arraybackslash}p{0.09\textwidth}
+                >{\raggedright\arraybackslash}p{0.14\textwidth}
+                >{\raggedright\arraybackslash}p{0.15\textwidth}
+                >{\raggedright\arraybackslash}p{0.15\textwidth}
+                >{\raggedright\arraybackslash}p{0.13\textwidth}
+                >{\raggedright\arraybackslash}p{0.10\textwidth}}
+\toprule
+Type & Observation & Operationalization & Licensed inference & Projectibility payoff & Invalid inference & Use context \\
+\midrule
+Output-centred failure profile &
+generated output &
+factuality, faithfulness, support, uncertainty, granularity &
+the failure is likely to recur under specified structural supports &
+predicts recurrence, detection, and mitigation transfer under similar generation
+or grounding conditions &
+treating \term{hallucination} as false output, or treating one low score as
+deployment safety &
+model evaluation, retrieval-augmented generation, factuality claims \\
+\addlinespace
+Adversarial relation kind &
+boundary-crossing interaction &
+attack distribution, policy class, evaluator, target system &
+the system is vulnerable under a specified adversarial network &
+predicts vulnerability and defence brittleness relative to attacker class,
+interface, and policy boundary &
+treating \term{jailbreak resistance} as a model property or projecting across
+attacker classes &
+red-teaming, release gates, security evaluation \\
+\addlinespace
+Capability-attribution term &
+task performance &
+benchmark, metric, item population, prompting scaffold &
+the performance supports a capability claim over a domain &
+predicts transfer or robustness across item variants, metrics, scaffolds, and
+system boundaries when the attribution is validated &
+treating a score as a capability, or a benchmark as the domain &
+benchmark reporting, model comparison, deployment claims \\
+\addlinespace
+Umbrella governance construct &
+aggregate risk or value label &
+component taxonomy, governance use &
+lower-level constructs are being coordinated for a purpose &
+predicts which lower-level evaluations should travel together for a stated
+governance decision &
+treating \term{alignment} or \term{trustworthiness} as a single behavioural
+construct with a single score &
+procurement, audit, release and risk-management decisions \\
+\bottomrule
+\end{tabular}
+\caption{AI evaluation terms by primary inferential role.}
+\label{tab:typology}
+\end{table}
+\FloatBarrier
+
+The first row covers output-centred failure profiles. \term{Hallucination} is
+the main case: a generated output is assessed for factuality, faithfulness,
+support, uncertainty, and grounding. The licensed inference concerns recurrence
+and mitigation transfer under similar generation and grounding conditions. The
+misanalysis treats hallucination as a bare false-output label or projects from a
+single benchmark score to deployment safety.
+
+The second row covers adversarial relation kinds. \term{Jailbreak} evaluations
+describe a relation among a model, interface, policy boundary, attacker, and
+evaluator. The licensed inference concerns vulnerability under a specified
+adversarial network. The misanalysis treats resistance to one attack class as
+general resistance.
+
+The third row covers capability attributions. \term{Reasoning},
+\term{emergence}, and \term{agency} move from task performance to claims about
+what a system can do across a domain. The licensed inference concerns transfer
+or robustness across item variants, metrics, scaffolds, and system boundaries.
+The misanalysis treats a benchmark as the domain itself.
+
+The fourth row covers umbrella governance constructs. \term{Alignment} and
+\term{trustworthiness} coordinate lower-level evaluations for institutional
+purposes. Their projectibility is coordinative: the terms license expectations
+about which lower-level constructs should be evaluated together for a decision.
+The misanalysis treats an umbrella label as a single behavioural kind.
+
+The typology is non-exclusive. Hallucination has relational features because
+unsupportedness depends on a source, a task, and a user context. Jailbreaks often
+end in bad outputs. Agency can be described as a capability, a system
+architecture, or a deployment relation. The classification rule is therefore
+about primary inferential role: a term's type is fixed by the inference its
+evaluations are mainly used to license.
+
+Confused debates arise when one profile is mistaken for another. A score is read
+as a capability, a relational vulnerability is read as a model property, or an
+umbrella governance label is read as a single behavioural cluster. The worked
+cases make that diagnostic concrete.
+
+\section{Hallucination as an output-centred failure profile}
+
+\term{Hallucination} starts from a generated output, but the failure profile is
+wider than falsity. It includes factuality, faithfulness to source, support and
+grounding, uncertainty, granularity, retrieval conditions, task context, and user
+uptake. The output remains the centre of the evaluation, but the source,
+retrieval system, prompt, and use context help determine which failure profile the
+output instantiates \citep{ji2023survey,huang2025survey}.
+
+The source relation is central. In source-conditioned generation, an output can
+contradict the source, add claims that the source doesn't verify, or introduce
+content that's true but unsupported by the assigned evidence. In open-domain
+question answering, the relevant source can be world knowledge rather than an
+input document. In retrieval-augmented generation, it can be the retrieved
+context, the retrieval corpus, or a cited passage. These settings share a family
+resemblance, but they don't license the same inference.
+
+False output is therefore too coarse. A model can make a factual error,
+overstate what the available source warrants, contradict a retrieved document,
+fail to retrieve the needed evidence, answer with misplaced confidence under
+uncertainty, or give an answer whose harm depends on the user's task. These are
+related failures, but their operationalizations differ. A factuality metric for
+biographical claims doesn't measure source faithfulness in summarization, and a
+source-faithfulness score in retrieval-augmented generation doesn't measure
+whether a medical or legal assistant should have abstained.
+
+Task goal matters too. If a system is asked to write a true-or-false test and
+includes \enquote{Toronto is the capital of Canada} as an item, the false
+proposition is intentional test content, not a hallucination. The same sentence
+becomes a hallucination if the system presents it as true, treats it as
+supported, or uses it as an answer where accuracy is the goal. The label tracks
+the role the output is meant to play, not falsity in the string alone.
+
+Hallucination is best treated as a failure profile. The profile has
+recurring parts: a plausible generated answer, an evidential or factual defect,
+some relation to a source or task goal, and a user-facing risk created by the
+answer's uptake. Different evaluations put weight on different parts of the
+profile. A biography generator invites atomic factual checks; a summarizer
+invites source-faithfulness checks; a high-stakes assistant invites abstention
+and uncertainty checks.
+
+The measurement literature already reflects this plurality. FActScore decomposes
+long-form answers into atomic facts and asks whether those facts are supported
+by a specified source \citep{min2023factscore}. SelfCheckGPT uses instability
+across sampled responses as a black-box signal for unsupported claims
+\citep{manakul2023selfcheckgpt}. Retrieval augmentation changes the failure
+profile by changing the evidence available to the model, but retrieval can also
+introduce noisy, missing, or conflicting context
+\citep{shuster2021retrieval,huang2025survey}. Uncertainty-based work gives
+another signal: under some conditional-generation settings, higher predictive
+uncertainty tracks greater hallucination risk \citep{xiao2021hallucination}.
+
+These operationalizations license different projections. An atomic-fact score
+can support claims about factual precision under a chosen source. A resampling
+detector can support claims about unstable unsupported content. A retrieval
+intervention can support claims about settings where missing parametric
+knowledge is the relevant bottleneck. Each projection is useful, and each has a
+failure boundary.
+
+The failure boundary is part of the construct. Resampling can miss a model that
+consistently repeats the same false claim. Atomic-fact scoring can miss
+relevance, recall, and whether the system should have answered at all. Retrieval
+can reduce parametric-knowledge failures while introducing wrong, noisy, missing,
+or conflicting evidence. These aren't peripheral complications. They specify the
+conditions under which the hallucination label supports projection.
+
+Classifying hallucination as an output-centred failure profile licenses
+projection to recurrence under specified generation and grounding conditions. If
+the same knowledge boundary, decoding procedure, retrieval design, incentive
+structure, and uncertainty-handling processes are in place, the classification
+can support expectations about where similar failures will recur and which
+detection or mitigation techniques can transfer. It blocks the inference from
+one low hallucination score to deployment safety.
+
+\section{Jailbreak as an adversarial relation}
+
+\term{Jailbreak} starts from an interaction that crosses a policy boundary. The
+evaluation object is a relation among model behaviour, attacker strategy,
+interface affordances, guardrail design, evaluator judgement, and the
+institutional definition of prohibited output. That's why jailbreak resistance
+should be paired with an adversary model rather than treated as an intrinsic
+property of a model \citep{yi2024jailbreak,vassilev2024adversarial}.
+
+The relevant relation has several components. There's an attacker goal, an
+attacker's knowledge of the system, an attacker capability, an interaction
+channel, a policy boundary, a guardrail or refusal design, an evaluator standard,
+and a target system. Direct chat jailbreaks, transferable adversarial suffixes,
+persuasion-based attacks, and indirect prompt injection share enough of this
+profile to be grouped together, but they don't share one mechanism
+\citep{zou2023universal,zeng2024johnny,greshake2023not}.
+
+This relational structure explains why in-the-wild jailbreaks are a social and
+technical population. Prompt families are copied, revised, hosted, tested, and
+patched across time. Their success depends on vendor policy, model update,
+interface, forbidden-content class, and evaluator choice
+\citep{shen2024do}. A benchmark that reports attack success rate without this
+network can still be useful, but the reported number has a narrow inferential
+target.
+
+Classifying jailbreak as an adversarial relation licenses projection only
+relative to a specified adversarial network. A result can support expectations
+about vulnerability under attacker class A, interface I, policy boundary P, and
+attack distribution D. It doesn't by itself support expectations about attacker
+class B, a different interface, or a new policy regime. The payoff is a more
+precise release claim: resistance is always resistance to a defined attack
+space.
+
+\section{Reasoning, emergence, and agency as capability attributions}
+
+\term{Reasoning}, \term{emergence}, and \term{agency} share a score-to-capability
+problem. Each begins with task performance and asks whether that performance
+supports a claim about what the system can do across a domain. The failure
+routes differ. Reasoning claims can be fragile across item variants, distractors,
+scaffolds, and contamination controls. Emergence claims can depend on metric
+choice. Agency claims can depend on where the model-tool-environment boundary is
+drawn.
+
+The common risk is treating the benchmark as if it directly revealed the
+capability. A task score is an observation, a benchmark aggregate is an
+operationalization, and a capability attribution is an interpretation. The
+attribution becomes projectible only when the benchmark is embedded in a wider
+network of evidence: item variation, tests that separate the target construct
+from nearby constructs, contamination checks, prompting conditions, and
+comparisons with neighbouring constructs \citep{freiesleben2026establishing}.
+
+Reasoning should be the central case. The survey literature treats reasoning as
+a plural and unsettled construct, covering deductive, inductive, abductive,
+analogical, causal, probabilistic, formal, and informal reasoning
+\citep{huang2023reasoning}. That plurality matters for validity. A benchmark can
+show strong performance on one task population while leaving open whether the
+model has a reasoning capacity that transfers across problem forms, domains, and
+prompting regimes.
+
+The plurality also changes what counts as confirming evidence. A deductive
+reasoning claim asks for validity-preserving steps across form changes. A causal
+reasoning claim asks for sensitivity to interventions and counterfactual
+structure. A mathematical word-problem claim asks for stable mapping from the
+story to the relevant operations. Treating these as one flat reasoning score
+makes the construct easier to report and harder to validate.
+
+GSM-Symbolic makes the worry concrete. \textcite{mirzadeh2025gsm} generate
+controlled variants of GSM8K-style problems and show that model performance can
+vary substantially across value substitutions, problem complexity, and seemingly
+irrelevant clauses. These results leave the general reasoning question open
+while showing that a fixed benchmark score can hide a distribution of
+behaviours. A reasoning attribution becomes stronger when it survives controlled
+item variation, contamination checks, distractors, and changes in scaffold.
+
+This fragility matters because the benchmark score is often asked to carry a
+larger claim than the item population supports. If irrelevant clauses change the
+answer strategy, the score no longer cleanly measures mathematical reasoning
+over the intended domain. If chain-of-thought prompting supplies a scaffold, the
+capability claim should specify whether the target is unaided problem solving,
+prompted deliberation, or scaffolded performance.
+
+Emergence is a second capability-attribution problem. \textcite{wei2022emergent}
+define emergent abilities operationally as abilities that appear in larger
+models but not smaller ones. That framing explains why capability language is
+tempting: some scaling curves look like qualitative change.
+\textcite{schaeffer2023emergent} show why the inference needs care. If a
+nonlinear or discontinuous metric makes gradual performance change look sudden,
+then the curve supports a claim about the interaction among model scale, task,
+and metric before it supports a claim about a qualitatively new capability.
+
+The constructive lesson is to report the metric and task structure that make an
+emergence claim projectible. A sharp threshold under one scoring rule can license
+a claim about performance under that rule. It licenses a broader capability
+claim only when neighbouring metrics, item populations, and model families
+support the same interpretation.
+
+Benchmark infrastructure can either sharpen or blur the attribution. MMLU uses
+many academic and professional subjects to measure breadth of multitask
+understanding, but it also shows lopsided performance and calibration problems
+\citep{hendrycks2020measuring}. HELM responds to narrow leaderboard culture by
+combining scenarios, metrics, and standardization, making visible that accuracy
+is only one desideratum among calibration, robustness, fairness, bias, toxicity,
+and efficiency \citep{liang2023holistic}. Dynabench pushes the same lesson
+dynamically: model ability should be probed through human-and-model-in-the-loop
+examples that expose failures after static benchmarks saturate
+\citep{kiela2021dynabench}.
+
+Agency is the system-boundary case. Agentic LLM surveys define the target as a
+system that receives natural-language input, reasons or plans, acts
+autonomously, uses tools or environments, and pursues goals
+\citep{plaat2025agentic}. The attribution therefore attaches to a model-system
+configuration rather than to a bare language model. Tool access, memory,
+planning horizon, feedback, permissions, and environment design help determine
+whether the system counts as agentic for a given evaluation.
+
+The same base model can be part of different agency profiles. In an autocomplete
+interface, it predicts text without acting in the world. In a tool-using
+assistant, it can call APIs, revise plans, and affect an external state. In a
+multi-agent simulation, its behaviour depends on other agents and feedback from
+the environment. The agency attribution travels only with the relevant system
+boundary.
+
+Classifying these terms as capability attributions turns the question
+\enquote{Does the model reason?} into a measurement question: which capability
+claim, licensed by which operationalization, projects to which domain, under
+which contamination and scaffold conditions? The same form applies to emergence
+and agency. Which threshold, under which metric, projects across which model
+families? Which model-system configuration, with which tools and permissions,
+supports which action claim? The constructive payoff is calibrated attribution:
+a capability term becomes useful when it predicts transfer, robustness, and
+failure boundaries better than the benchmark score alone.
+
+\section{Alignment and trustworthiness as umbrella governance constructs}
+
+Umbrella governance constructs aggregate lower-level constructs for governance
+purposes. Their role is closer to labels such as health or fitness than to a
+single behavioural kind. The label signals that a set of lower-level evaluations
+is being managed together for a stated institutional use, such as release,
+procurement, audit, or risk management. NIST's AI Risk Management Framework
+treats trustworthy AI in just this way, bundling validity and
+reliability, safety, security and resilience, accountability and transparency,
+explainability and interpretability, privacy, and fairness with harmful bias
+managed \citep{nist2023artificial}.
+
+The projectible claim is coordinative rather than behavioural. A coordinative
+claim concerns how lower-level evaluations are bundled for a decision, not one
+stable output pattern across tasks. A \term{trustworthiness} label predicts that
+a specified set of lower-level evaluations has been assembled for a decision,
+that the same bundle can be inspected again in a similar use, and that omitting
+one component changes the governance claim. A release decision and a procurement
+decision can therefore use the same umbrella word while licensing different
+projections.
+
+\term{Alignment} is similarly target-dependent. One target is user preference:
+RLHF trains models to follow instructions by optimizing against preference data
+and reward models \citep{ouyang2022training}. Another target is truthfulness. A
+third is policy compliance. A fourth is longer-term user welfare or institutional
+risk management. These targets can reinforce one another, but the construct
+claim changes when the target changes.
+
+Consider a deployed assistant that gives agreeable answers to user beliefs,
+corrects false factual claims, and refuses prohibited requests under a content
+policy. A preference evaluation, a truthfulness evaluation, and a
+policy-compliance evaluation can assign different scores to the same system.
+Calling the system aligned says little until the lower-level target is stated.
+
+Sycophancy is the pressure case. A behaviour can satisfy one alignment target,
+such as immediate user preference, while failing another, such as truthfulness.
+Reward-model overoptimization gives the general proxy problem: optimizing a
+learned reward can outrun the target it was meant to stand in for
+\citep{gao2023scaling}. Sycophancy research makes the conflict concrete:
+preference data and preference models can reward responses that match user
+beliefs over truthful corrections \citep{sharma2024towards}, and recent formal
+work argues that preference-based post-training can amplify this behaviour when
+the learned reward favours agreement \citep{shapira2026rlhf}.
+
+The pressure case matters because it can reverse the evaluative verdict without
+changing the surface behaviour. Agreement with a false user belief can be a
+success relative to a learned preference signal and a failure relative to
+truthfulness, calibration, or epistemic support. The choice of lower-level target
+determines which inference is licensed. The umbrella term shouldn't hide that target
+choice.
+
+The question \enquote{Is sycophancy misalignment?} is therefore indexed to the
+lower-level construct in view. Relative to a narrow preference target, some
+sycophantic behaviour can be a local alignment success. Relative to truthfulness,
+calibration, user autonomy, or epistemic support, it's a failure. That's the
+point of treating alignment as an umbrella construct: it coordinates lower-level
+targets that can come apart.
+
+Umbrella constructs are projectible in a coordinative sense. They predict which
+lower-level constructs should be evaluated together for a stated governance
+decision. A trustworthiness claim should license expectations about the bundled
+management of validity, reliability, safety, security, accountability,
+transparency, privacy, and fairness under a specified use. An alignment claim
+should say which lower-level target is in view and block projection to
+incompatible targets. Without that specification, the umbrella label makes a
+decision sound measured while leaving the measured construct underdescribed.
 
 \section{Conclusion}
 
-TODO: Write conclusion.
+AI evaluation vocabulary has several inferential roles. Some terms mark
+output-centred failure profiles, some mark adversarial relations, some support
+capability attributions, and some coordinate governance constructs. Each type
+licenses a different inference, travels under different conditions, and fails in
+a characteristic way when evaluators read it as another type.
+
+The typology's practical use is diagnostic. It asks what observation produced a
+label, what operationalization gave the label content, what inference the label
+licenses, and where that inference stops. Evaluation design, benchmark
+reporting, model comparison, and governance language should make those answers
+explicit. Who uses a label, and what decision it licenses, is part of the
+measurement system.
+
+The typology is a starting point rather than a closed map. \term{Bias} is the
+obvious extension. It looks partly like an output profile, partly like a
+deployment-sensitive relation among model, population, task, and affected group,
+and partly like a governance construct. That complexity is exactly why the
+diagnostic matters. The useful question is what the term licenses in a given
+evaluation, what structure would let the inference travel, and what
+overgeneralization the label should block.
 
 \section*{Acknowledgements}
 
-% TODO: Replace with the actual models used on this project and their current versions.
-% Check model names: frontier models change frequently (e.g., GPT-4 → GPT-4o → o3).
-This paper was drafted with the assistance of large language models. All content has been reviewed and revised by the author, who takes full responsibility for the final text.
+This paper was drafted and revised with assistance from OpenAI Codex. All
+content was reviewed and revised by the author, who takes full responsibility
+for the final text.
 
+\newpage
 \printbibliography
 
 \end{document}
