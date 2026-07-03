@@ -6,9 +6,14 @@ AI evaluation kinds. Framework / typology paper applying Boyd's HPC and Khalidi'
 
 ## Stage
 
-Zero draft (2026-05-16). `main.tex` now builds to a 15-page framework draft, but
-the current shape is underpowered and should not be polished locally without a
-structural rethink.
+Structurally rewritten draft (2026-07-02). `main.tex` builds to a 19-page draft
+centred on the missing projectibility norm (reliability / construct validity /
+projectibility), with the licence life-cycle (§4: generation, scope, narrowing,
+erosion, expiry, defeat, revocation; misrecognition and maintenance as
+cross-cutting axes) as the positive apparatus. The 2026-05-16 diagnosis is
+implemented; the typology is now a diagnostic, not the centrepiece. Template
+lessons imported from the moral-act-kinds sister paper (status-vs-uptake,
+two-stage taxonomy, falsification conditions, dispute-relocation move).
 
 ## Working title
 
@@ -29,25 +34,33 @@ TBD. Candidates: *Minds and Machines*, *Philosophy & Technology*, *Synthese*, *A
 
 ## Carryovers / next actions
 
-- Do not keep line-polishing the current zero draft. The next real move is a
-  structural rewrite around the missing projectibility norm in AI evaluation:
-  reliability can show that a result is stable; construct validity can show what
-  it means in the measured setting; projectibility should say when the claim may
-  travel across models, prompts, attacks, benchmarks, or governance uses.
-- Demote the four-way typology from centrepiece to diagnostic tool. It should
-  serve the reliability/validity/projectibility argument, not substitute for it.
-- Deepen fewer cases rather than broadening the survey. Reasoning and
-  alignment/sycophancy are the likely load-bearing cases; jailbreak is currently
-  too thin, and hallucination is serviceable but mostly classificatory.
-- Add Weinberger (2026), `weinberger2026HomeostasisCausalControl`, to the
-  structural rewrite. It gives the missing distinction between stable benchmark
-  behaviour and controlled robustness: benchmark reliability is not homeostasis;
-  monitoring, red-teaming, release gates, retraining, and policy enforcement may
-  be control-like stabilisers when they correct perturbations.
+- Done 2026-07-02: structural rewrite (see Stage); Weinberger integrated as the
+  maintenance/control stage (§4.3, §7); Goodman cited at first mention of
+  projectibility (house rule; also fixed in the moral-act-kinds draft); Ryle
+  1949 added as pedigree for "inference licence"; Bareinboim & Pearl 2016 added
+  (verified) for the transportability differentiation (§3, §9); AGI paper
+  engaged as predecessor with one sentence in §6 (`reynolds2025agi`);
+  acknowledgements corrected to models actually used; keywords added.
+- Brett to read and judge the rewrite: does the licence life-cycle carry the
+  paper, and do the two deep cases (hallucination structure; capability
+  narrowing/erosion) hold up?
+- Add Groeger, Wen, and Brbic (2026) as a methods case for the missing
+  projectibility norm in AI evaluation. Central note:
+  `../../../literature/groeger_wen_brbic_2026_aristotelian_representation_hypothesis.notes.md`.
+  Their result is a compact example: representation-similarity claims across
+  model scale, architecture, or modality do not travel until width/depth and
+  aggregation confounds are calibrated away. Natural home: §6 (capability
+  licences), as a narrowing example beyond GSM-Symbolic.
 - Continue source verification before any submission-oriented pass. Some local
   bib entries were model-assisted and need authoritative checking.
-- Decide whether to engage the existing AGI evaluation paper as predecessor or as
-  a worked case within this framework.
+- Re-title at polish: current title over-promises "kinds" (the paper argues most
+  of these terms aren't kinds); candidates should foreground the licence
+  life-cycle or the missing norm.
+- Bib hygiene: ~30 keys are duplicated between the central bib and
+  `references-local.bib` (benign biber warnings; biber uses the central
+  copies). Prune local duplicates at `/push-bib` time.
+- The moral-act-kinds paper and this one now share an unpublished structural
+  template; cross-cite once either is public so they read as one programme.
 
 ### 2026-05-16 Session Notes
 
