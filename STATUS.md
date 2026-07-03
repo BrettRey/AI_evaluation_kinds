@@ -30,7 +30,24 @@ Framework paper first, with three worked cases (*hallucination*; *jailbreak/robu
 
 ## Target venue
 
-TBD. Candidates: *Minds and Machines*, *Philosophy & Technology*, *Synthese*, *AI & Society*. Decision deferred until paper structure is clearer.
+Shortlist set 2026-07-03 (venue-selection screen). **Primary: *Minds and
+Machines*** — best journal-reader match: the first two pages (Wei/Schaeffer,
+Raji, inference licences) already carry the contract for philosophy-of-AI
+readers, and the predecessor AGI paper under review there signals programme
+fit. Concurrency with the AGI submission is a timing question, not a bar:
+decide at submission-gate time; if the AGI decision has landed, M&M is
+unambiguous; if still pending, either submit anyway (distinct manuscripts) or
+use the first backup to decorrelate.
+**Backup 1: *Philosophy & Technology*** — strong for the governance side
+(thin verdicts, coordination regimes, licence statements), but would want the
+intro reweighted toward trustworthy-AI/governance so the first two pages carry
+that contract. **Backup 2: *Synthese*** — the kind-theoretic machinery fits,
+but referees there would demand deeper validity-theory engagement
+(Messick/Borsboom) and may read §§7–8 as applied; slower pipeline; sister
+moral-act-kinds paper already targets it. *AI & Society* dropped except under
+a full governance reframing. Before any submission: CrossRef recent-issue
+survey of the chosen venue (per venue-outcomes standing lesson: run the
+desk-editor screen before first submission).
 
 ## Carryovers / next actions
 
